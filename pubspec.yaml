@@ -1,0 +1,51 @@
+name: smartcent
+description: "SmartCent - A comprehensive budget management application with dual-mode functionality for smart financial tracking."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  intl: ^0.18.1
+  fl_chart: ^0.63.0
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  path_provider: ^2.1.0
+  sqflite: ^2.3.0
+  image_picker: ^1.0.4
+  http: ^1.1.0
+  audioplayers: ^5.2.1
+  uuid: ^4.2.1
+  permission_handler: ^11.1.0
+  firebase_core: ^3.13.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/icon.png
+
+# App icon configuration
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/my_new_icon.png.png"
+  remove_alpha_ios: true
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/my_new_icon.png.png"
+    background_color: "#38b2ac"
+    theme_color: "#3182ce"
