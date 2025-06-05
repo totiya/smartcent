@@ -1,8 +1,7 @@
 workflows:
-  # iOS Workflow - Builds iOS app in the cloud
   ios-workflow:
     name: iOS Build for SmartCent
-    max_build_duration: 60
+    max_build_duration: 120
     environment:
       flutter: stable
       xcode: latest
@@ -10,28 +9,19 @@ workflows:
     scripts:
       - name: Get Flutter packages
         script: |
+          flutter clean
           flutter packages pub get
-      - name: Install CocoaPods dependencies
+      - name: Setup iOS configuration
         script: |
-          cd ios && pod install
-      - name: Build iOS without code signing
+          cd ios
+          if [ ! -f Podfile ]; then
+            echo "Creating Podfile..."
+            flutter pub get
+          fi
+          cd ..
+      - name: Build iOS app
         script: |
+          flutter build ios --release --no-codesign
           flutter build ipa --release --no-codesign
     artifacts:
-      - build/ios/ipa/*.ipa
-    
-  # Android Workflow (optional - you can build locally)
-  android-workflow:
-    name: Android Build for SmartCent
-    max_build_duration: 60
-    environment:
-      flutter: stable
-    scripts:
-      - name: Get Flutter packages
-        script: |
-          flutter packages pub get
-      - name: Build Android APK
-        script: |
-          flutter build apk --release
-    artifacts:
-      - build/app/outputs/flutter-apk/*.apk 
+      - build/ios/ipa/*.ipa 
