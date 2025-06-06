@@ -6,6 +6,9 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ios_signing:
+        distribution_type: ad_hoc  # For testing/distribution
+        bundle_identifier: com.example.ibs
     scripts:
       - name: Get Flutter packages
         script: |
@@ -21,17 +24,10 @@ workflows:
           cd ..
       - name: Build iOS app
         script: |
-          flutter build ios --release --no-codesign
-          echo "=== Building IPA manually ==="
-          cd build/ios/iphoneos
-          mkdir -p Payload
-          cp -r Runner.app Payload/
-          zip -r ../../../Runner.ipa Payload/
-          cd ../../..
+          flutter build ipa --release --export-method=ad-hoc
           echo "=== Checking for generated files ==="
           find . -name "*.ipa" -type f
-          ls -la *.ipa || echo "No .ipa files in root"
-          ls -la build/ios/ || echo "build/ios/ not found"
+          ls -la build/ios/ipa/ || echo "build/ios/ipa/ not found"
     artifacts:
-      - "*.ipa"
+      - build/ios/ipa/*.ipa
       - build/ios/archive/*.xcarchive 
