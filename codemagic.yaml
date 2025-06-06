@@ -23,5 +23,11 @@ workflows:
         script: |
           flutter build ios --release --no-codesign
           flutter build ipa --release --no-codesign
+          echo "=== Checking for generated files ==="
+          find . -name "*.ipa" -type f
+          ls -la build/ios/ || echo "build/ios/ not found"
+          ls -la build/ios/ipa/ || echo "build/ios/ipa/ not found"
     artifacts:
-      - build/ios/ipa/*.ipa 
+      - build/ios/ipa/*.ipa
+      - build/ios/archive/*.ipa
+      - "**/*.ipa" 
